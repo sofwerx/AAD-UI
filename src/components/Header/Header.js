@@ -31,12 +31,6 @@ class Header extends Component {
                             <Link className="link" to="/reviews">My Assessments</Link>
                         </SideNavItem>
                         <SideNavItem className="border-bottom" waves>
-                            <Link className="link" to="/public">Public Reviews</Link>
-                        </SideNavItem>
-                        <SideNavItem className="border-bottom" waves>
-                            <Link className="link" to="/stats">The Stats</Link>
-                        </SideNavItem>
-                        <SideNavItem className="border-bottom" waves>
                             <Link className="link" to="/editProfile">Edit Profile</Link>
                         </SideNavItem>
                         <SideNavItem className="width-50" onClick={() => this.props.logout()} waves>
@@ -44,7 +38,7 @@ class Header extends Component {
                         </SideNavItem>
                     </SideNav>
                 </div>
-            </Navbar>   
+            </Navbar>
         )
       } else {
         return (
