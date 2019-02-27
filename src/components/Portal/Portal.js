@@ -8,8 +8,8 @@ import { getUserInfo } from '../../actions/getUserInfo'
 import { getAllTools } from '../../actions/getAllTools'
 import { Icon,
          Section,
-         Row, 
-         Col, 
+         Row,
+         Col,
          Button,
          Collection,
          CollectionItem,
@@ -33,7 +33,6 @@ class Portal extends Component {
         <div>
           {/* HEADER */}
           <SubHeader icon={require("../../assets/launch_icon.png")} subHeader="Portal"/>
-          
           {
             this.props.allTools ?
             this.props.allTools.map((tool, i) => {
@@ -45,23 +44,28 @@ class Portal extends Component {
                     </Col>
                     <Col className="tool-description" s={6}>
                         {tool.description}
+                          <div classname="margin-top">
+                          <b><i>For demonstration purposes only - not operational data</i></b>
+                          </div>
                     </Col>
                     <Col s={4} className="center">
-                        <Row>
-                        <Modal
-                          header="You'll need some credentials"
-                          trigger={<Button disabled={tool.url[0] != 'h' ? true : false}  className="portal-buttons" waves='light' > Open <Icon right tiny className="data">touch_app</Icon></Button>}>
-                          <Row className="margin-top valign-wrapper">
-                            <Col s={6}>
-                              <div className="border-bottom">Username: <span className="bold">{tool.username}</span></div>
-                              <div className="border-bottom">Password: <span className="bold">{tool.password}</span> </div>
-                            </Col>
-                            <Col s={6}>
-                              <Button disabled={tool.url[0] != 'h' ? true : false} className="portal-buttons modal-close" waves='light' node='a' target="_blank" href={tool.url}> Open <Icon right tiny className="data">touch_app</Icon></Button>
-                            </Col>
-                          </Row>
-                        </Modal>
-                        </Row>
+                    <Row>
+
+                    <Modal
+                      header="You'll need some credentials"
+                      trigger={<Button disabled={tool.url[0] != 'h' ? true : false}  className="portal-buttons" waves='light' > Open <Icon right tiny className="data">touch_app</Icon></Button>}>
+                      <Row className="margin-top valign-wrapper">
+                        <Col s={6}>
+                          <div className="border-bottom">Username: <span className="bold">{tool.username != '' ? tool.username : '(not needed)'}</span></div>
+                          <div className="border-bottom">Password: <span className="bold">{tool.password != '' ? tool.password : '(not needed)'}</span> </div>
+                        </Col>
+                        <Col s={6}>
+                          <Button disabled={tool.url[0] != 'h' ? true : false} className="portal-buttons modal-close" waves='light' node='a' target="_blank" href={tool.url}> Open <Icon right tiny className="data">touch_app</Icon></Button>
+                        </Col>
+                      </Row>
+                    </Modal>
+
+                    </Row>
                         <Row>
                           <Modal
                             className="full-page"
@@ -70,7 +74,10 @@ class Portal extends Component {
                             trigger={<Button disabled={tool.url[0] != 'h' ? true : false} className="portal-buttons" waves='light'>Data <Icon right tiny className="data">cloud</Icon> </Button>}>
                             <Collection>
                             {this.props[`${tool.name == "MEADE/SORT-OE" ? "MEADE" :
-                                          tool.name == "Argument Mapper" ? "AM" : tool.name}DataSets`].map(dataSet => {
+                                          tool.name == "Argument Mapper" ? "AM" :
+                                          tool.name == "Attack the Network" ? "AtN" :
+                                          tool.name == "SOF4D" ? "SOF4D" :
+                                          tool.name}DataSets`].map(dataSet => {
                               return <CollectionItem>{dataSet}</CollectionItem>
                             })}
                               </Collection>
@@ -107,7 +114,8 @@ const mapStateToProps = state => {
       role: state.auth.role,
       MEADEDataSets: state.tools.MEADEDataSets,
       AtNDataSets: state.tools.AtNDataSets,
-      AMDataSets: state.tools.AMDataSets
+      AMDataSets: state.tools.AMDataSets,
+      SOF4DDataSets: state.tools.SOF4DDataSets
   }
 }
 

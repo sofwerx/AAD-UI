@@ -1,4 +1,4 @@
-export const reviews = ( state={ 
+export const reviews = ( state={
     allReviews: null,
     allPublicReviews: null,
     postReviewFailed: false,
@@ -55,19 +55,19 @@ export const reviews = ( state={
    }, action) => {
       switch(action.type){
         case 'REVIEWS_AQUIRED':
-          return { ...state, allReviews: action.payload, reviewsRequestFinished: true }  
+          return { ...state, allReviews: action.payload, reviewsRequestFinished: true }
         case 'PUBLIC_REVIEWS_AQUIRED':
-          return { ...state, allPublicReviews: action.payload, publicReviewsRequestFinished: true }  
+          return { ...state, allPublicReviews: action.payload, publicReviewsRequestFinished: true }
         case 'POST_COMPLETE_FALSE':
-          return { ...state, postComplete: false }  
+          return { ...state, postComplete: false }
         case 'UPDATE_COMPLETE_FALSE':
-          return { ...state, updateComplete: false }  
+          return { ...state, updateComplete: false }
         case 'DELETE_COMPLETE_FALSE':
-          return { ...state, deleteComplete: false }  
+          return { ...state, deleteComplete: false }
         case 'REMOVE_FILE_COMPLETE_FALSE':
-          return { ...state, removeFileComplete: false }  
+          return { ...state, removeFileComplete: false }
         case 'POST_REVIEW_SUCCESS':
-          return { ...state, postReviewFailed: false,  postComplete: true }  
+          return { ...state, postReviewFailed: false,  postComplete: true }
         case 'POST_REVIEW_FAILED':
           return { ...state, postReviewFailed: true }
         case 'UPDATE_REVIEW_SUCCESS':
@@ -87,19 +87,19 @@ export const reviews = ( state={
           } else {
               return { ...state, files: [...state.files, action.payload.response]}
           }
-        case 'CLEAR_FILES': 
+        case 'CLEAR_FILES':
           return { ...state, files: [] }
-        case 'REMOVE_FILE_SUCCESS': 
+        case 'REMOVE_FILE_SUCCESS':
           return { ...state, files: state.files.filter(file => file.review_id != action.payload.reviewId), removeFileComplete: true }
-        case 'ALL_QUESTIONS_INDIFFERENT': 
+        case 'ALL_QUESTIONS_INDIFFERENT':
           return { ...state, allQuestionsAreIndifferent: true }
-        case 'QUESTIONS_NOT_INDIFFERENT': 
+        case 'QUESTIONS_NOT_INDIFFERENT':
           return { ...state, allQuestionsAreIndifferent: false }
-        case 'SET_SORTOE_ANSWER_INPUTS': 
+        case 'SET_SORTOE_ANSWER_INPUTS':
           return { ...state, sortoeAnswerInputs: action.payload }
         case 'LAST_REVIEW_ID_AQUIRED':
           return { ...state, lastReviewID: action.payload }
-        case 'ANSWERS_AQUIRED': 
+        case 'ANSWERS_AQUIRED':
           return { ...state, allAnswers: action.payload.totals, getAnswersComplete: true, selectedStatsToolName: action.payload.tool_name }
         default:
           return state

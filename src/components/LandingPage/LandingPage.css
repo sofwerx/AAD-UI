@@ -2,7 +2,7 @@
 main.landing-page {
     flex: 1 0 auto;
     background: linear-gradient(
-                     rgba(20,20,20, .5), 
+                     rgba(20,20,20, .5),
                      rgba(20,20,20, .5)),
                      url('../../assets/landingPageBackground2.jpg');
     background-position: center;
@@ -50,7 +50,8 @@ main.landing-page {
     color: #262626;
     font-size: 1.1em;
     font-size: 1.7em;
-    font-family: 'Dancing Script', cursive;
+    /* font-family: 'Dancing Script', cursive; */
+    font-family: 'Josefin Slab', Courier, serif;
     text-transform: capitalize;
 }
 

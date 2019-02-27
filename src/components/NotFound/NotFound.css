@@ -10,6 +10,7 @@
     top: 30%; */
     padding-top: 20%;
     margin: 0 auto;
-    font-family: 'Dancing Script', cursive;
+    /* font-family: 'Dancing Script', cursive; */
+    font-family: 'Josefin Slab', Courier, serif;
     font-size: 5em;
 }

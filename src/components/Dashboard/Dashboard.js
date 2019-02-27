@@ -50,34 +50,7 @@ class Dashboard extends Component {
                   </Link>
               </Col>
             </Row>
-            <Row>
-              <Col className='valign-wrapper center  tool-wrapper hover-lighten border-top-and-right' s={12} m={6}>
-                  <Link  to="/public">
-                    <div className="dashboard-block-wrapper">
-                      <img alt="icon" src={require("../../assets/lightbulb_icon.png")} width="100px" />
-                      <div className="j-title">Public Reviews</div>
-                      <hr className="thin width40Per"/>
-                      <p className="dashboard-description-text">
-                      See what other people are saying about the tools available.
-                      </p>
-                      <hr className="thin width40Per"/>
-                    </div>
-                  </Link>
-              </Col>
-              <Col className='stats-wrapper hover-lighten   align-wrapper center tool-wrapper ' s={12} m={6}>
-                  <Link  to="/stats">
-                    <div className="dashboard-block-wrapper">
-                      <img alt="icon" src={require("../../assets/stats_icon.png")} width="100px" />
-                      <div className="j-title">The Stats</div>
-                      <hr className="thin width40Per"/>
-                      <p className="dashboard-description-text">
-                      Statistically displaying how tools are measuring up.
-                      </p>
-                      <hr className="thin width40Per"/>
-                    </div>
-                  </Link>
-              </Col>
-            </Row>
+
           </Section>
 
         </div>

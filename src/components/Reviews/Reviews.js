@@ -59,7 +59,7 @@ class Reviews extends Component {
 
     onCheckSlack = () => this.setState({...this.state, slackIsChecked: !this.state.slackIsChecked})
 
-    
+
     componentWillMount = () => {
         this.props.authenticate().then(r => r).catch(err => err)
         this.props.getUserInfo().then(r => this.props.setPermissions(r.payload.role)).catch(err => err)
@@ -91,7 +91,7 @@ class Reviews extends Component {
                     }
                 })
             })
-            
+
             if (this.props.files.length == this.props.allReviews.filter(review => review.path).length) {
                 this.props.setPostCompleteFalse()
                 this.props.setUpdateCompleteFalse()
@@ -127,11 +127,11 @@ class Reviews extends Component {
                 // IF THE FILE INPUT CONTAINS A FILE THAT ISN'T A PICTURE OR A PDF or IF THE PICTURE OR PDF HAS UPPERCASE EXTENSION...
                 if((type != 'jpg' &&
                    type != 'jpeg' &&
-                   type != 'png' && 
+                   type != 'png' &&
                    type != 'pdf' &&
                    type != 'JPG' &&
                    type != 'JPEG' &&
-                   type != 'PNG' && 
+                   type != 'PNG' &&
                    type != 'PDF' )
                    ||
                    (
@@ -140,7 +140,7 @@ class Reviews extends Component {
                     evt.target.files[0].name.slice(-3) == 'PNG' ||
                     evt.target.files[0].name.slice(-3) == 'PDF'
                    )
-                   
+
                    ){
                     // NEW FILE OR EDITING A FILE?
                     if(inputType == "fileInputValue"){
@@ -154,7 +154,7 @@ class Reviews extends Component {
                             editFileTypePasses: false
                         })
                     }
-                } 
+                }
                 // THE INPUT HAS THE TYPE OF FILE AND ALSO HAS THE CORRECT TYPE OF FILE
                 else {
                     // NEW FILE OR EDITING A FILE?
@@ -184,11 +184,11 @@ class Reviews extends Component {
         }
     })
   }
-   
+
 
   toggleEditSaveHandler = (editable, toolName, reviewId,
-                            text, path, sharable, rating, 
-                            answer_1, answer_2, answer_3, 
+                            text, path, sharable, rating,
+                            answer_1, answer_2, answer_3,
                             answer_4, answer_5, int_type) => {
     // Edit has already been open, now time to save the updates.
     let updateObject = {}
@@ -222,7 +222,7 @@ class Reviews extends Component {
             reviewIdBeingEdited: null,
             editFileInputValue: null
         })
-    } 
+    }
     // Edit has NOT already been open, now time to update the fields.
     else {
         this.setState({
@@ -247,7 +247,7 @@ class Reviews extends Component {
         ...this.state,
         postStarted: true
     })
-      
+
     this.props.postReview(
         this.state.toolNameInputValue,
         this.state.textInputValue,
@@ -259,7 +259,7 @@ class Reviews extends Component {
         this.props.jobTitle,
         this.props.company,
         this.state.rangeValue,
-        this.props.sortoeAnswerInputs, 
+        this.props.sortoeAnswerInputs,
         this.state.intType
     )
     this.setState({
@@ -269,7 +269,7 @@ class Reviews extends Component {
         intType: "NOT SPECIFIED"
     })
 
-    
+
     let lastReview = this.refs.lastReview
     if (this.props.allReviews.length > 0) lastReview.scrollIntoView({behavior: "smooth"})
   }
@@ -281,7 +281,7 @@ class Reviews extends Component {
         const pdfjsLib = window['pdfjs-dist/build/pdf'];
         pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
         const PDFJS = pdfjsLib;
-        const canvasContainer = document.getElementById(`${canvasId}-container`)            
+        const canvasContainer = document.getElementById(`${canvasId}-container`)
         canvasContainer.innerHTML = ""
 
         function renderPage(page) {
@@ -292,23 +292,23 @@ class Reviews extends Component {
               canvasContext: ctx,
               viewport: viewport
             };
-            
+
             canvas.height = viewport.height;
             canvas.width = viewport.width;
             canvasContainer.appendChild(canvas);
-            
+
             page.render(renderContext);
         }
-        
+
         function renderPages(pdfDoc) {
             for(var num = 1; num <= pdfDoc.numPages; num++)
                 pdfDoc.getPage(num).then(renderPage);
         }
         PDFJS.disableWorker = true;
         PDFJS.getDocument({data: pdfData}).then(renderPages);
-          
-        
-    } 
+
+
+    }
   }
 
   removeFileHandler = reviewId => {
@@ -339,7 +339,7 @@ class Reviews extends Component {
           {/* ////////////////////  ARE THERE EXISTING REVIEWS? IF SO, SHOW HERE   ///////////////////////// */}
           {/* ////////////////////  ////////////////////////////////////////////   ///////////////////////// */}
             {
-            this.props.allReviews && this.props.allReviews.length > 0 ?            
+            this.props.allReviews && this.props.allReviews.length > 0 ?
             this.props.allReviews.map((review, i) => {
               return (
                 <Section key={review.id} className="reviews-wrapper center review-underline-wrapper">
@@ -348,19 +348,21 @@ class Reviews extends Component {
                       {
                         review.id === this.state.reviewIdBeingEdited ?
                         <Row>
-                            <Input 
-                            s={12} 
-                            type='select' 
-                            label="Choose A Tool" 
+                            <Input
+                            s={12}
+                            type='select'
+                            label="Choose A Tool"
                             value={this.state.editToolNameInputValue}
                             onChange={evt => this.updateInputValue(evt, 'editToolNameInputValue')}>
                                 <option value='MEADE/SORT-OE'>MEADE/SORT-OE</option>
-                                <option value='AtN'>AtN</option>
+                                <option value='Argument Mapper'>Argument Mapper</option>
+                                <option value='Attack the Network'>Attack the Network</option>
+                                <option value='SOF4D'>SOF4D</option>
                             </Input>
-                            <Input 
-                            s={12} 
-                            type='select' 
-                            label="Intelligence Discipline" 
+                            <Input
+                            s={12}
+                            type='select'
+                            label="Your Background"
                             value={this.state.editIntType}
                             onChange={evt => this.updateInputValue(evt, 'editIntType')}>
                                 <option value='NOT SPECIFIED'>NOT SPECIFIED</option>
@@ -392,9 +394,9 @@ class Reviews extends Component {
                                                 <span className="uppercase-light-font">{question.question}</span>
                                             </Col>
                                             <Col s={4}>
-                                                <Input 
-                                                s={12} 
-                                                type='select' 
+                                                <Input
+                                                s={12}
+                                                type='select'
                                                 value={this.state[`editAnswer_${question.questionID}_value`]}
                                                 onChange={evt => this.updateInputValue(evt, `editAnswer_${question.questionID}_value`)}>
                                                     <option value='Strongly Disagree'>Strongly Disagree</option>
@@ -403,16 +405,16 @@ class Reviews extends Component {
                                                     <option value='Agree'>Agree</option>
                                                     <option value='Strongly Agree'>Strongly Agree</option>
                                                 </Input>
-                                            </Col> 
+                                            </Col>
                                         </Row>
                                     ))}
                                     </CollapsibleItem>
                                 </Collapsible>
-                                <Input 
-                                s={12} 
+                                <Input
+                                s={12}
                                 onChange={evt => this.updateInputValue(evt, 'editTextInputValue')}
-                                disabled={false} 
-                                type='textarea' 
+                                disabled={false}
+                                type='textarea'
                                 value={this.state.editTextInputValue}
                                 placeholder={review.text.length < 1 ? "Add A Comment Here..." : null} />
                             </Row>
@@ -428,13 +430,13 @@ class Reviews extends Component {
                                             </Col>
                                             <Col s={4}>
                                                 <span className="uppercase-bold-font">{review[`answer_${question.questionID}`]}</span>
-                                            </Col> 
+                                            </Col>
                                         </Row>
                                     ))}
                                     </CollapsibleItem>
                                 </Collapsible>
-                            
-                                {review.text.length > 0 ? 
+
+                                {review.text.length > 0 ?
                                 <Input s={12}  disabled={true} type='textarea' defaultValue={review.text} />
                                 :
                                 null}
@@ -464,15 +466,15 @@ class Reviews extends Component {
                                             <Col s={5}>
                                                 <Button onClick={() => this.setState({ ...this.state, editFileInputValue: null })} className="portal-buttons delete-button" waves='light'> Cancel <Icon right tiny className="data">delete_outline</Icon></Button>
                                             </Col>
-                                        </Row>  
+                                        </Row>
                                     :
                                     <Row>
-                                        <Input 
+                                        <Input
                                         className="already-posted"
                                         type="file"
-                                        label={review.path ? <span>Replace<Icon right tiny  className="data">cloud_upload</Icon></span> : <span>Upload<Icon right tiny  className="data">cloud_upload</Icon></span>}  
+                                        label={review.path ? <span>Replace<Icon right tiny  className="data">cloud_upload</Icon></span> : <span>Upload<Icon right tiny  className="data">cloud_upload</Icon></span>}
                                         name="fileUpload"
-                                        s={12} 
+                                        s={12}
                                         placeholder={`${review.path ? review.path : `(.jpg/.png/.jpeg) or a .pdf.`}`}
                                         onChange={evt => this.updateInputValue(evt, 'editFileInputValue')} />
                                     </Row>
@@ -496,10 +498,10 @@ class Reviews extends Component {
                             review.id === this.state.reviewIdBeingEdited ?
                             <div>
                                 <Row className="edit-review-buttons">
-                                        <p>Overall {this.state.toolNameInputValue} rating: 
+                                        <p>Overall {this.state.toolNameInputValue} rating:
                                             <span className={`bold ${this.applyColor(this.state.editRangeValue) }`}>{this.state.editRangeValue}% </span></p>
                                         <p className="range-field maxWidth70 center">
-                                            <input 
+                                            <input
                                             type="range"
                                             value={this.state.editRangeValue}
                                             onChange={evt => this.updateInputValue(evt, 'editRangeValue')}
@@ -507,24 +509,14 @@ class Reviews extends Component {
                                         </p>
                                 </Row>
                                 <Row className="edit-review-buttons">
-                                        <div className="switch">
-                                            <label>
-                                            Private
-                                            <input type="checkbox" checked={this.state.editPublicIsChecked} onChange={evt => this.updateInputValue(evt, 'editPublicIsChecked')}/>
-                                            <span className="lever"></span>
-                                            Public
-                                            </label>
-                                        </div>          
-                                </Row>
-                                <Row className="edit-review-buttons">
-                                    <Button disabled={!this.state.editFileTypePasses} 
+                                    <Button disabled={!this.state.editFileTypePasses}
                                     onClick={() => this.toggleEditSaveHandler(review.id === this.state.reviewIdBeingEdited, review.tool_name,
                                                                             review.id, review.text, review.path,
                                                                             review.sharable, review.rating, review.answer_1,
-                                                                            review.answer_2, review.answer_3, review.answer_4, review.answer_5, review.int_type)} 
-                                    className="portal-buttons" 
-                                    waves='light'> 
-                                        Save 
+                                                                            review.answer_2, review.answer_3, review.answer_4, review.answer_5, review.int_type)}
+                                    className="portal-buttons"
+                                    waves='light'>
+                                        Save
                                         <Icon right tiny className="data">check</Icon>
                                     </Button>
                                 </Row>
@@ -535,14 +527,14 @@ class Reviews extends Component {
                                             className="review-modal"
                                             trigger={
                                             <div className="portal-buttons view-buttons" >
-                                                <span onClick={() => this.openAttachment(this.props.files.filter(file => file.review_id == review.id)[0].file, `${review.id}-canvas`, review.path.substr(review.path.length - 3) == 'pdf')} 
+                                                <span onClick={() => this.openAttachment(this.props.files.filter(file => file.review_id == review.id)[0].file, `${review.id}-canvas`, review.path.substr(review.path.length - 3) == 'pdf')}
                                                 className="open-attachment-span" >
                                                     View
                                                     <Icon right tiny className="data view-icon">folder_open</Icon>
                                                 </span>
                                             </div>
                                             }>
-                                            {   
+                                            {
                                                 review.path.substr(review.path.length - 3) == 'pdf' ?
                                                 <div id={`${review.id}-canvas-container`}></div> :
                                                 review.path.substr(review.path.length - 3) == 'jpg' || review.path.substr(review.path.length - 3) == 'png' || review.path.substr(review.path.length - 3) == 'jpeg' ?
@@ -575,43 +567,43 @@ class Reviews extends Component {
                                             <div className={`bold ${this.applyColor(review.rating) }`}>{review.rating}% </div>
                                     </Col>
                                     <Col className="border-bottom standard-height" s={6}>
-                                        
+
                                         {
                                             review.sharable ?
                                             <Row>
                                                 <Col s={4}>
-                                                    Public 
+                                                    Public
                                                 </Col>
                                                 <Col s={4}></Col>
                                                 <Col s={4}>
                                                     <Icon >public</Icon>
                                                 </Col>
-                                            </Row>  
+                                            </Row>
                                             :
                                             <Row>
                                                 <Col s={4}>
-                                                    Private 
+                                                    Private
                                                 </Col>
                                                 <Col s={4}></Col>
                                                 <Col s={4}>
                                                     <Icon >security</Icon>
                                                 </Col>
-                                            </Row>  
+                                            </Row>
                                         }
                                     </Col>
                                 </Row>
                                 <Row className="edit-review-buttons">
-                                    <Button onClick={() => this.toggleEditSaveHandler(review.id === this.state.reviewIdBeingEdited, review.tool_name, 
+                                    <Button onClick={() => this.toggleEditSaveHandler(review.id === this.state.reviewIdBeingEdited, review.tool_name,
                                                                                     review.id, review.text,  review.path,
                                                                                     review.sharable, review.rating, review.answer_1,
-                                                                                    review.answer_2, review.answer_3, review.answer_4, review.answer_5, review.int_type)} 
-                                            className="portal-buttons" 
-                                            waves='light'> 
-                                            Edit 
-                                            <Icon right tiny className="data">create</Icon> 
+                                                                                    review.answer_2, review.answer_3, review.answer_4, review.answer_5, review.int_type)}
+                                            className="portal-buttons"
+                                            waves='light'>
+                                            Edit
+                                            <Icon right tiny className="data">create</Icon>
                                     </Button>
                                 </Row>
-                                <Row className="edit-review-buttons"> 
+                                <Row className="edit-review-buttons">
                                     {
                                         (this.props.files.length != this.props.allReviews.filter(review => review.path).length) && review.path ?
                                         <div>
@@ -626,7 +618,7 @@ class Reviews extends Component {
                                             className="review-modal"
                                             trigger={
                                             <div className="portal-buttons view-buttons" >
-                                                <span onClick={() => this.openAttachment(this.props.files.filter(file => file.review_id == review.id)[0].file, `${review.id}-canvas`, review.path.substr(review.path.length - 3) == 'pdf')} 
+                                                <span onClick={() => this.openAttachment(this.props.files.filter(file => file.review_id == review.id)[0].file, `${review.id}-canvas`, review.path.substr(review.path.length - 3) == 'pdf')}
                                                 className="open-attachment-span" >
                                                     View
                                                     <Icon right tiny className="data view-icon">folder_open</Icon>
@@ -652,7 +644,7 @@ class Reviews extends Component {
                 </Section>
               )
             })
-            : 
+            :
                 null
             }
 
@@ -667,23 +659,25 @@ class Reviews extends Component {
                     <Section>
                         <Row className="valign-wrapper max-width-50">
                             <Col s={6}>
-                            <Input  
+                            <Input
                             className="center-align"
                             s={12}
-                            onChange={evt => this.updateInputValue(evt, 'toolNameInputValue')} 
+                            onChange={evt => this.updateInputValue(evt, 'toolNameInputValue')}
                             value={this.state.toolNameInputValue}
                             type='select' label="Tool" >
-                                <option value='MEADE/SORT-OE'>MEADE/SORT-OE</option>
-                                <option value='AtN'>AtN</option>
+                              <option value='MEADE/SORT-OE'>MEADE/SORT-OE</option>
+                              <option value='Argument Mapper'>Argument Mapper</option>
+                              <option value='Attack the Network'>Attack the Network</option>
+                              <option value='SOF4D'>SOF4D</option>
                             </Input>
                             </Col>
                             <Col s={6}>
-                            <Input  
+                            <Input
                             className="center-align"
                             s={12}
-                            onChange={evt => this.updateInputValue(evt, 'intType')} 
+                            onChange={evt => this.updateInputValue(evt, 'intType')}
                             value={this.state.intType}
-                            type='select' label="Intelligence Discipline" >
+                            type='select' label="Your Background" >
                                 <option value='NOT SPECIFIED'>NOT SPECIFIED</option>
                                 <option value='HUMINT'>HUMINT</option>
                                 <option value='SIGINT'>SIGNINT</option>
@@ -705,7 +699,7 @@ class Reviews extends Component {
                                 <CollapsibleItem header="Additional Comments / File Upload" icon="add">
                                 <Row className="valign-wrapper">
                                             <Col s={8}>
-                                                <Input 
+                                                <Input
                                                 s={12}
                                                 className="text-align-center"
                                                 type='textarea'
@@ -728,7 +722,7 @@ class Reviews extends Component {
                                                         </Col>
                                                     </Row>
                                                 </Col>
-                                                : 
+                                                :
                                                 <Col s={4}>
                                                             {
                                                                 this.state.fileInputValue && this.state.fileTypePasses ?
@@ -784,10 +778,10 @@ class Reviews extends Component {
                         <Row className="valign-wrapper">
                             <Col s={6} className="center">
                                 <Row className="border-bottom">
-                                <p>Overall {this.state.toolNameInputValue} rating: 
+                                <p>Overall {this.state.toolNameInputValue} rating:
                                     <span className={`bold ${this.applyColor(this.state.rangeValue) }`}>{this.state.rangeValue}% </span></p>
                                 <p className="range-field">
-                                    <input 
+                                    <input
                                     type="range"
                                     value={this.state.rangeValue}
                                     onChange={evt => this.updateInputValue(evt, 'rangeValue')}
@@ -796,17 +790,6 @@ class Reviews extends Component {
                                 </Row>
                             </Col>
                             <Col s={6}>
-                                <Row className="border-bottom">
-                                    <div className="switch tooltip">
-                                        <label>
-                                        Private
-                                        <input type="checkbox" checked={this.state.publicIsChecked} onChange={() => this.onCheckPublic()}/>
-                                        <span className="lever"></span>
-                                        Public
-                                        </label>
-                                        <span className="tooltiptext">Would you like this review to be made public?</span>
-                                    </div>
-                                </Row>
                                 <Row>
                                     {
                                         this.props.allQuestionsAreIndifferent  ?
@@ -814,35 +797,35 @@ class Reviews extends Component {
                                             id="submit-modal"
                                             header='Confirmation'
                                             trigger={
-                                                <Button 
+                                                <Button
                                                     disabled={ !this.state.fileTypePasses }
                                                     className="portal-buttons" waves='light'>
                                                     <Icon right className="data">send</Icon>
-                                                    Submit Review 
-                                                </Button>            
+                                                    Submit Review
+                                                </Button>
                                             }>
                                             <Row className="valign-wrapper">
                                                 <Col s={8}>
                                                     <p>You have left all of the fields marked as <span className="bold">"Indifferent"</span> and have given {this.state.toolNameInputValue} an overall rating of<span className={`bold ${this.applyColor(this.state.rangeValue) }`}>{this.state.rangeValue}% </span>. Would you still like to submit your review?</p>
                                                 </Col>
                                                 <Col s={4}>
-                                                <Button 
+                                                <Button
                                                     disabled={ !this.state.fileTypePasses }
                                                     onClick={() => this.postReviewHandler()} className="portal-buttons modal-close" waves='light'>
                                                     <Icon right className="data">send</Icon>
-                                                    Submit Review 
-                                                </Button>            
+                                                    Submit Review
+                                                </Button>
                                                 </Col>
                                             </Row>
                                             </Modal>
                                         :
                                             <div>
-                                                <Button 
+                                                <Button
                                                     disabled={ !this.state.fileTypePasses }
                                                     onClick={() => this.postReviewHandler()} className="portal-buttons" waves='light'>
                                                     <Icon right className="data">send</Icon>
-                                                    Submit Review 
-                                                </Button>            
+                                                    Submit Review
+                                                </Button>
                                                 {
                                                     !this.props.postComplete && this.state.postStarted ?
                                                     <div className="progress">
@@ -858,8 +841,8 @@ class Reviews extends Component {
                         </Row>
                     </Section>
                 </CollapsibleItem>
-                </Collapsible>      
-            </Section>  
+                </Collapsible>
+            </Section>
         </div>
       )
     }
@@ -885,8 +868,8 @@ const mapStateToProps = state => {
       allQuestionsAreIndifferent: state.reviews.allQuestionsAreIndifferent,
       sortoeAnswerInputs: state.reviews.sortoeAnswerInputs,
       OFFquestions: state.reviews.OFFquestions,
-      role: state.auth.role, 
-      lastReviewID: state.reviews.lastReviewID, 
+      role: state.auth.role,
+      lastReviewID: state.reviews.lastReviewID,
       answers: state.reviews.answers
   }
 }
@@ -894,11 +877,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => bindActionCreators({
     authenticate,
     getAllReviews,
-    postReview, 
+    postReview,
     updateReview,
     deleteReview,
-    getFile, 
-    clearFiles, 
+    getFile,
+    clearFiles,
     setPostCompleteFalse,
     setUpdateCompleteFalse,
     setDeleteCompleteFalse,
