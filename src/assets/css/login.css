@@ -1,0 +1,60 @@
+.login-signup-form {
+    max-width: 50%;
+    /* margin-top: 10%; */
+    text-align: center;
+}
+
+input:focus:not([readonly]) {
+    border-bottom: 1px solid #3f3f3f !important;
+    box-shadow: 0 1px 0 0 #3f3f3f !important;
+}
+
+label {
+    color: #262626 !important;
+}
+
+input[type='email']:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.login-signup-submit-button {
+    background-color: white;
+    color: #262626;
+    margin-top: 20px;
+}
+.login-signup-submit-button:hover {
+    background-color: #262626;
+    color: white;
+}
+
+.login-signup-submit-button:focus {
+    background-color: white;
+    color: #262626;
+}
+
+.signup-login-header {
+    text-align: center;
+    margin-top: 50px;
+    color:  #262626;
+    /* font-weight: 300; */
+    /* font-family: 'Josefin Slab', serif; */
+    font-family: 'Dancing Script', cursive;
+
+}
+
+.error-text{
+    color: #BD3D3A;
+}
+
+[type="checkbox"]:checked+label:before {
+    border-right: 2px solid #3f3f3f;
+    border-bottom: 2px solid #3f3f3f;
+}
+
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
+    border: 2px solid #3f3f3f;
+}
+
+.login-header {
+    margin-top: 125px;
+}

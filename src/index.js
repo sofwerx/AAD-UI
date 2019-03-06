@@ -1,14 +1,20 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
-import store from './store';
+import React from 'react';
+import { store, history } from './store';
 
-ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-, document.getElementById('root'));
-registerServiceWorker();
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+
+import App from './components/App';
+
+ReactDOM.render((
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route path="/" component={App}/>
+      </Switch>
+    </ConnectedRouter>
+  </Provider>
+
+), document.getElementById('root'));

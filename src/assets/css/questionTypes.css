@@ -1,0 +1,66 @@
+.questions-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.question {
+    border: 1px solid black;
+    margin-bottom:5px;
+}
+
+.question_likertScale {
+    font-size: 1em;
+}
+
+.question_likertScale:nth-child(even) {
+    background-color: rgba(213, 213, 213, .85);
+    color: black;
+}
+
+.question_likertScale:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+}
+
+.LikertScaleQuestionInput {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.question_textField {
+    margin: 10px 0 10px 0;
+    border: none;
+    color: black;
+}
+
+.question_overallPercent {
+    border: none;
+}
+
+.question_backgroundSelect {
+    /*border: none;*/
+    /*margin:auto;*/
+}
+
+.questionText {
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.questionBody {
+    min-width:100%!important;
+    margin-bottom: 0px;
+}
+
+.overallPercentLabel {
+    margin:auto;
+}
+.overallPercentBody {
+    margin:auto;
+    max-width:70%;
+}
+
+
