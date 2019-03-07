@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, } from 'react-materialize';
+import { Navbar } from 'react-materialize';
 
 import '../../assets/css/header.css';
 import connect from 'react-redux/es/connect/connect';

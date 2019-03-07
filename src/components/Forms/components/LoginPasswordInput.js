@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Input } from 'react-materialize';
+const PropTypes = require('prop-types');
 
-
-class UsernameInput extends Component {
+class LoginPasswordInput extends Component {
   constructor(props) {
     super(props);
-    this.usernameValidator = this.usernameValidator.bind(this);
+    this.validateValue = this.validateValue.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onBlur = this.onBlur.bind(this);
 
@@ -29,17 +29,19 @@ class UsernameInput extends Component {
   };
 
   onBlur = (e) => {
-    this.usernameValidator(e);
+    this.validateValue(e);
     if (this.parentOnBlur) this.parentOnBlur(e);
   };
 
-  usernameValidator = (e) => {
+  validateValue = (e) => {
     const hasWarning = (e.target.value.length < 8 || e.target.value.length > 30);
-    this.setState({
-      ...this.state,
-      lengthWarning: hasWarning ? 'Must be between 8 and 30 characters.' : null
-    });
-    e.target.notValid = hasWarning;
+    this.setState(
+      prevState => ({
+        ...prevState,
+        lengthWarning: hasWarning ? 'Please enter a valid password.' : null
+      })
+    );
+    e.target.hasValidValue = !hasWarning;
   };
 
   render() {
@@ -47,26 +49,34 @@ class UsernameInput extends Component {
       <div className="form-group">
         <Input
           required
-          className={'signup-input'}
+          type={'password'}
           id={'input-' + this.props.name}
+          className={'signup-input'}
           name={this.props.name}
-          type={'text'}
+          label={<span>{this.props.label}</span>}
           value={this.state.value}
           onChange={this.onChange}
           onBlur={this.onBlur}
-          placeholder={this.props.placeholder}
-          label={<span>{'Username'}</span>}
           s={this.props.s}
         />
         {
           this.state.lengthWarning ?
-          <div className="error-text">
-            {this.state.lengthWarning}
-          </div>
+            <div className="error-text">
+              {this.state.lengthWarning}
+            </div>
             : null}
       </div>
     );
   }
 }
-export default UsernameInput;
+LoginPasswordInput.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  s: PropTypes.number,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func
+};
 
+export default LoginPasswordInput;

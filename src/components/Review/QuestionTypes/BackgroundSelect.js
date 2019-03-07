@@ -10,7 +10,6 @@ const AnswerOptions = props => {
   let options = answerOptions.map((answerOption, index) =>
     <option value={index}>{answerOption.answer_option_value}</option>
   );
-  console.log(options);
   return (
     <Input
       className="LikertScaleQuestionInput"

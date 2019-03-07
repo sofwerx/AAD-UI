@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux'
 // import { resetState } from '../../actions/resetState'
 import { Redirect } from 'react-router-dom'
 // import FormContainer from "./Sample/FormContainer";
-import RegisterForm from "./Forms/RegisterForm";
+import RegisterForm from "../Forms/RegisterForm";
 class RegisterPage extends Component {
 
     componentWillMount(){

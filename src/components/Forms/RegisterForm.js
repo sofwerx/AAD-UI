@@ -48,7 +48,6 @@ class RegisterForm extends Component {
 
     this.submitForm = () => ev => {
       ev.preventDefault();
-      console.log('submitForm');
       let newUser = this.state.newUser;
       delete newUser.password_confirmation;
       this.props.onSubmit(this.state.newUser);
@@ -69,8 +68,7 @@ class RegisterForm extends Component {
           ...prevState.errors,
           [name]: notValid
         }
-      }),
-      () => console.log(this.state.newUser)
+      })
     );
   };
 

@@ -1,9 +1,9 @@
 import agent from '../agent';
 import Header from './Common/Header';
 import Footer from './Common/Footer';
-import LoginPage from './LoginPage';
+import LoginPage from './Auth/LoginPage';
 import LandingPage from './LandingPage';
-import RegisterPage from './RegisterPage';
+import RegisterPage from './Auth/RegisterPage';
 import PortalPage from './Portal/PortalPage';
 import DashboardPage from './Dashboard/DashboardPage';
 import ProfilePage from './ProfilePage';
@@ -63,7 +63,6 @@ const PublicRoute = ({component: Component, currentUser, ...rest}) => {
 class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.redirectTo) {
-      console.log('App.RedirectTo');
       // this.context.router.replace(nextProps.redirectTo);
       store.dispatch(push(nextProps.redirectTo));
       this.props.onRedirect();
@@ -79,7 +78,6 @@ class App extends React.Component {
     const currentUserString = window.localStorage.getItem('currentUser');
     const currentUser = currentUserString ? JSON.parse(currentUserString) : null;
 
-    console.log('currentUser: ' + currentUser);
     //Pull currentUser from localStorage instead of API.
     this.props.onLoad(token ? currentUser : null, token);
     // this.props.onLoad(token ? agent.Auth.current() : null, token);

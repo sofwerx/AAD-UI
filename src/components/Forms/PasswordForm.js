@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: (userId, updatedUser) => {
-    console.log(updatedUser);
     const payload = agent.auth.save(userId, updatedUser);
     dispatch({
       type: UPDATE_USER_INFO,
@@ -31,7 +30,6 @@ class PasswordForm extends Component {
     this.handleInputV2 = this.handleInputV2.bind(this);
 
     this.updatedPassword = () => {
-      console.log(this.state.passwordForm.password);
       return {
         password: this.state.passwordForm.password
       };

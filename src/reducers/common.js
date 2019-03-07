@@ -20,7 +20,6 @@ export default (state = defaultState, action) => {
   // console.log("[REDUCER] Common:" + action.type);
   switch (action.type) {
     case APP_LOAD:
-      console.log(action.currentUser);
       return {
         ...state,
         token: action.token || null,
