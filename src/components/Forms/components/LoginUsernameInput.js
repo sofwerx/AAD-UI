@@ -32,7 +32,7 @@ class LoginUsernameInput extends Component {
   };
 
   validateValue = (e) => {
-    const hasWarning = (e.target.value.length < 8 || e.target.value.length > 30);
+    const hasWarning = (e.target.value.length < 6 || e.target.value.length > 30);
     this.setState(
       prevState => ({
         ...prevState,

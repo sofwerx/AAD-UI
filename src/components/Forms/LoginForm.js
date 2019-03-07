@@ -10,8 +10,8 @@ import ListErrors from '../Common/ListErrors';
 const PropTypes = require('prop-types');
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (email, password) =>
-    dispatch({ type: LOGIN, payload: agent.auth.login(email, password)
+  onSubmit: (username, password) =>
+    dispatch({ type: LOGIN, payload: agent.auth.login(username, password)
     }),
   onUnload: () => dispatch({ type: LOGIN_PAGE_UNLOADED })
 });

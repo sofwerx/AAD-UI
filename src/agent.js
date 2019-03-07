@@ -35,10 +35,10 @@ const requests = {
 const auth = {
   current: () =>
     requests.get('/user'),
-  login: (email, password) =>
+  login: (username, password) =>
     requests.post('/users/login', {
       user: {
-        email,
+        username,
         password
       }
     }),
