@@ -50,7 +50,6 @@ class PortalPage extends Component {
     }
     else {
       return props.tools.map(tool => {
-        console.log(tool);
         return (
           <Tool handler={this.props.triggerNewReviewForm} tool={tool}/>
         );

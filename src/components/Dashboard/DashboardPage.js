@@ -4,7 +4,7 @@ import '../../assets/css/dashboard.css';
 import { Section, Row, Col } from 'react-materialize';
 import DashboardItem from './DashboardItem';
 
-const DashboardPage = (props) => {
+const DashboardPage = () => {
   return (
     <div className="dash-outter-wrapper">
       <Section id="dash-body-wrapper ">

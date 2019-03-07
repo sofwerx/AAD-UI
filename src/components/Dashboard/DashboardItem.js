@@ -2,6 +2,8 @@ import React from 'react';
 import '../../assets/css/dashboard.css';
 import { Link } from 'react-router-dom';
 
+const PropTypes = require('prop-types');
+
 const DashboardItem = (props) => {
   return (
     <div className="dashboardItem">
@@ -18,6 +20,13 @@ const DashboardItem = (props) => {
       </Link>
     </div>
   );
+};
+
+DashboardItem.propTypes = {
+  description: PropTypes.string,
+  title: PropTypes.string,
+  to: PropTypes.string,
+  iconLoc: PropTypes.string
 };
 
 export default DashboardItem;

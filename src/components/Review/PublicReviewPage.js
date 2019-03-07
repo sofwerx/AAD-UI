@@ -8,9 +8,9 @@ const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({});
 
 class PublicReviewPage extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentWillUnmount() {
   }

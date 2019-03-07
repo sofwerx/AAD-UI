@@ -30,7 +30,7 @@ REACT_APP_API_URL:  [http://localhost:3000]
 ### Installing
 1. Clone this repo.  [[AAD-UI GITHUB]](https://github.com/sofwerx/AAD-UI).
 3. `npm install` to install all required dependencies.
-6. `npm run dev` Starts an instance.
+6. `npm run start` Starts an instance.
 
 Should be able to hit a sample endpoint.
 `localhost:3000/`
