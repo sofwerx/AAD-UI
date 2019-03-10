@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
 
-/* Import Components */
-import TextInput from './components/TextInput';
 import { Button, Col, Icon, Row } from 'react-materialize';
+import TextInput from './components/TextInput';
+import EmailInput from './components/EmailInput';
+import PasswordInput from './components/PasswordInput';
 import UsernameInput from './components/UsernameInput';
+import ListErrors from '../Common/ListErrors';
+
 import {
   REGISTER,
   REGISTER_PAGE_UNLOADED
 } from '../../constants/actionTypes';
 import agent from '../../agent';
 import { connect } from 'react-redux';
+const PropTypes = require('prop-types');
 
-const mapStateToProps = state => ({
-  ...state.auth
-});
+const mapStateToProps = state => ({ ...state.auth });
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: (newUser) => {
     const payload = agent.auth.register(newUser);
-    dispatch({
-      type: REGISTER,
-      payload
-    });
+    dispatch({ type: REGISTER, payload });
   },
   onUnload: () =>
     dispatch({ type: REGISTER_PAGE_UNLOADED })
@@ -30,176 +29,174 @@ const mapDispatchToProps = dispatch => ({
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
+    // Fields to generate TextFields
+    this.textFields = ['first_name', 'last_name', 'job_title', 'company'];
+    // Custom Fields
+    this.customFields = ['username', 'email', 'password', 'password_confirmation'];
+    this.stateFields = this.textFields.concat(this.customFields);
 
-    this.state = {
-      newUser: {
-        username: '',
-        email: '',
-        first_name: '',
-        last_name: '',
-        job_title: '',
-        company: '',
-        password: '',
-        password_confirmation: ''
-      }
-    };
-    this.handleClearForm = this.handleClearForm.bind(this);
+    // Add initial "controlled" state for all fields.
+    let initialState = {};
+    this.stateFields.forEach((textField) => {
+        initialState[textField] = {
+          value: '',
+          hasValidValue: false
+      };
+    });
+    this.state = initialState;
     this.handleInputV2 = this.handleInputV2.bind(this);
+    this.validateAllFields = this.validateAllFields.bind(this);
+    this.validatePasswordsMatch = this.validatePasswordsMatch.bind(this);
+
 
     this.submitForm = () => ev => {
       ev.preventDefault();
-      let newUser = this.state.newUser;
-      delete newUser.password_confirmation;
-      this.props.onSubmit(this.state.newUser);
+      if(this.validateAllFields) {
+        let newUser = this.createUserRequest();
+        delete newUser.password_confirmation;// Remove from request
+        this.props.onSubmit(newUser);
+      }
     };
+  }
+
+  componentWillUnmount() {
+    this.props.onUnload();
   }
 
   handleInputV2 = (e) => {
     let value = e.target.value;
     let name = e.target.name;
-    let notValid = e.target.notValid;
+    let hasValidValue = (e.target.hasValidValue === undefined) ? false : e.target.hasValidValue;
     this.setState(
       prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          [name]: value
-        },
-        errors: {
-          ...prevState.errors,
-          [name]: notValid
+        ...prevState,
+        [name]: {
+          value,
+          hasValidValue
         }
+      })
+    );
+    this.validatePasswordsMatch();
+  };
+
+  // Create Obj to hold User Request
+  createUserRequest = () => {
+    let newUserRequest = {};
+    this.stateFields.forEach((textField) => {
+      newUserRequest[textField] = this.state[textField].value;
+    });
+    return newUserRequest;
+  };
+
+  // Validates Form Fields
+  validateAllFields = () => {
+    let formIsValid = true;
+    this.stateFields.forEach((textField) => {
+        if(this.state[textField].hasValidValue) formIsValid = false;
+    });
+    return formIsValid;
+  };
+
+  // Return TextFields
+  createTextFields = (textFields) => {
+    return textFields.map(fieldName => {
+      return (
+        <Col key={fieldName} s={12} m={3}>
+          <TextInput
+            name={fieldName}
+            label={this.humanizeString(fieldName)}
+            value={this.state[fieldName].value}
+            onChange={this.handleInputV2}
+            onBlur={this.handleInputV2}/>
+        </Col>
+      );
+    });
+  };
+
+  // Humanize "sample_string" to Sample String
+  humanizeString = (str) => {
+    return str
+      .replace(/[_\s]+/g, ' ')// Remove Underscores
+      .replace(/\b[a-z]/g, function (m) {// Capitalize Words
+        return m.toUpperCase();
+      });
+  };
+
+  validatePasswordsMatch = () => {
+    const password = this.state.password.value;
+    const passwordConfirmation = this.state.password_confirmation.value;
+    let passwordsMatch = true;
+    if (password.length > 0 && passwordConfirmation.length > 0) {
+      passwordsMatch = (password === passwordConfirmation);
+    }
+    this.setState(
+      prevState => ({
+        ...prevState,
+        passValidationError: !passwordsMatch
       })
     );
   };
 
-  handleClearForm(e) {
-    e.preventDefault();
-    this.setState({
-      newUser: {
-        username: '',
-        email: '',
-        first_name: '',
-        last_name: '',
-        job_title: '',
-        company: '',
-        password: '',
-        password_confirmation: ''
-      }
-    });
-  }
-
   render() {
     return (
       <div className="login-signup-wrapper">
-        <h4 className="signup-login-header">Signup</h4>
-        <Row className="login-signup-form">
-          <form className="container-fluid" onSubmit={this.submitForm()}>
+        <form className="container-fluid" onSubmit={this.submitForm()}>
+          <h4 className="signup-login-header">Signup</h4>
+          <Row className="login-signup-form">
             <Row>
-              <Col s={3}>
-                <TextInput
-                  required
-                  type={'text'}
-                  name={'first_name'}
-                  value={this.state.newUser.first_name}
-                  onChange={this.handleInputV2}
-                  onBlur={this.handleInputV2}
-                  label="First Name"
-                  s={12}/>{' '}
-              </Col>
-              <Col s={3}>
-                <TextInput
-                  required
-                  type={'text'}
-                  name={'last_name'}
-                  value={this.state.newUser.last_name}
-                  onChange={this.handleInputV2}
-                  onBlur={this.handleInputV2}
-                  label="Last Name"
-                  s={12}/>{' '}
-              </Col>
-              <Col s={3}>
-                <TextInput
-                  required
-                  type={'text'}
-                  name={'job_title'}
-                  value={this.state.newUser.job_title}
-                  onChange={this.handleInputV2}
-                  onBlur={this.handleInputV2}
-                  label="Job Title"
-                  s={12}/>{' '}
-              </Col>
-              <Col s={3}>
-                <TextInput
-                  required
-                  type={'text'}
-                  name={'company'}
-                  value={this.state.newUser.company}
-                  onChange={this.handleInputV2}
-                  onBlur={this.handleInputV2}
-                  label="Company"
-                  s={12}/>{' '}
-              </Col>
+              {this.createTextFields(this.textFields)}
             </Row>
             <Row>
-              <Col s={6}>
+              <Col s={12} m={6}>
                 <UsernameInput
-                  required
-                  name={'username'}
-                  value={this.state.newUser.username}
+                  value={this.state.username.value}
                   onChange={this.handleInputV2}
-                  onBlur={this.handleInputV2}
-                  s={12}/>{' '}
+                  onBlur={this.handleInputV2}/>{' '}
               </Col>
-              <Col s={6}>
-                <TextInput
-                  required
-                  type={'email'}
-                  name={'email'}
-                  value={this.state.newUser.email}
+              <Col s={12} m={6}>
+                <EmailInput
+                  value={this.state.email.value}
                   onChange={this.handleInputV2}
-                  onBlur={this.handleInputV2}
-                  label="Email"
-                  s={12}/>{' '}
+                  onBlur={this.handleInputV2}/>{' '}
               </Col>
             </Row>
             <Row>
-              <Col s={6}>
-                <TextInput
-                  required
-                  type={'password'}
-                  name={'password'}
-                  value={this.state.newUser.password}
+              <Col s={12} m={6}>
+                <PasswordInput
+                  value={this.state.password.value}
                   onChange={this.handleInputV2}
-                  onBlur={this.handleInputV2}
-                  label="Password"
-                  s={12}/>{' '}
+                  onBlur={this.handleInputV2}/>{' '}
               </Col>
-              <Col s={6}>
-                <TextInput
-                  required
-                  type={'password'}
+              <Col s={12} m={6}>
+                <PasswordInput
                   name={'password_confirmation'}
-                  value={this.state.newUser.password_confirmation}
-                  onChange={this.handleInputV2}
-                  onBlur={this.handleInputV2}
                   label="Confirm Password"
-                  s={12}/>{' '}
+                  value={this.state.password_confirmation.value}
+                  onChange={this.handleInputV2}
+                  onBlur={this.handleInputV2}/>{' '}
               </Col>
             </Row>
-            <Button
-              // onClick={this.submitForm}
-              large={true}
-              className={`login-signup-submit-button`}
-              waves='light'>
-              <Icon className="login-signup-button-icon">send</Icon>
-            </Button>
-
-          </form>
-
+          <ListErrors errors={this.props.errors}/>
+          {this.state.passValidationError ? <div className="error-text">Passwords must match.</div> : null }
+          <Button
+            large={true}
+            disabled={this.props.inProgress}
+            className={`login-signup-submit-button`}
+            waves='light'>
+            <Icon className="login-signup-button-icon">send</Icon>
+          </Button>
         </Row>
+        </form>
       </div>
     );
   }
 }
+
+RegisterForm.propTypes = {
+  onSubmit: PropTypes.func,
+  onUnload: PropTypes.func,
+  inProgress: PropTypes.bool,
+  errors: PropTypes.object
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

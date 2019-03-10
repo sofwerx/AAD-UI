@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Input } from 'react-materialize';
 const PropTypes = require('prop-types');
 
-class LoginUsernameInput extends Component {
+class PasswordInput extends Component {
   constructor(props) {
     super(props);
     this.validateValue = this.validateValue.bind(this);
@@ -36,7 +36,7 @@ class LoginUsernameInput extends Component {
     this.setState(
       prevState => ({
         ...prevState,
-        lengthWarning: hasWarning ? 'Please enter a valid username.' : null
+        validationWarning: hasWarning ? 'Password must be between 6 and 30 characters.' : null
       })
     );
     e.target.hasValidValue = !hasWarning;
@@ -47,20 +47,20 @@ class LoginUsernameInput extends Component {
       <div className="form-group">
         <Input
           required
-          type={'text'}
-          id={'input-' + this.props.name}
+          type={'password'}
+          id={'input-' + (this.props.name || 'password')}
           className={'signup-input'}
-          name={this.props.name}
-          label={<span>{this.props.label}</span>}
+          name={(this.props.name || 'password')}
+          label={<span>{(this.props.label || 'Password')}</span>}
           value={this.state.value}
           onChange={this.onChange}
           onBlur={this.onBlur}
-          s={this.props.s}
+          s={12}
         />
         {
-          this.state.lengthWarning ?
+          this.state.validationWarning ?
             <div className="error-text">
-              {this.state.lengthWarning}
+              {this.state.validationWarning}
             </div>
             : null}
       </div>
@@ -68,14 +68,12 @@ class LoginUsernameInput extends Component {
   }
 }
 
-LoginUsernameInput.propTypes = {
+PasswordInput.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   label: PropTypes.string,
-  placeholder: PropTypes.string,
-  s: PropTypes.number,
   onChange: PropTypes.func,
   onBlur: PropTypes.func
 };
 
-export default LoginUsernameInput;
+export default PasswordInput;

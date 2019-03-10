@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Input } from 'react-materialize';
+import validator from 'email-validator';
 const PropTypes = require('prop-types');
 
-class LoginPasswordInput extends Component {
+class EmailInput extends Component {
   constructor(props) {
     super(props);
     this.validateValue = this.validateValue.bind(this);
@@ -23,9 +24,7 @@ class LoginPasswordInput extends Component {
         value: value
       })
     );
-    if (this.parentOnChange) {
-      this.parentOnChange(e);
-    }
+    if (this.parentOnChange) this.parentOnChange(e);
   };
 
   onBlur = (e) => {
@@ -34,11 +33,12 @@ class LoginPasswordInput extends Component {
   };
 
   validateValue = (e) => {
-    const hasWarning = (e.target.value.length < 6 || e.target.value.length > 30);
+    const isValidEmail = validator.validate(e.target.value);
+    const hasWarning = (e.target.value.length === 0 || !isValidEmail);
     this.setState(
       prevState => ({
         ...prevState,
-        lengthWarning: hasWarning ? 'Please enter a valid password.' : null
+        validationWarning: hasWarning ? 'Please enter a valid email address.' : null
       })
     );
     e.target.hasValidValue = !hasWarning;
@@ -49,34 +49,33 @@ class LoginPasswordInput extends Component {
       <div className="form-group">
         <Input
           required
-          type={'password'}
-          id={'input-' + this.props.name}
+          type={'email'}
+          id={'input-' + (this.props.name || 'email')}
           className={'signup-input'}
-          name={this.props.name}
-          label={<span>{this.props.label}</span>}
+          name={(this.props.name || 'email')}
+          label={<span>{'Email'}</span>}
           value={this.state.value}
           onChange={this.onChange}
           onBlur={this.onBlur}
-          s={this.props.s}
+          s={12}
         />
         {
-          this.state.lengthWarning ?
+          this.state.validationWarning ?
             <div className="error-text">
-              {this.state.lengthWarning}
+              {this.state.validationWarning}
             </div>
             : null}
       </div>
     );
   }
 }
-LoginPasswordInput.propTypes = {
+
+EmailInput.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   label: PropTypes.string,
-  placeholder: PropTypes.string,
-  s: PropTypes.number,
   onChange: PropTypes.func,
   onBlur: PropTypes.func
 };
 
-export default LoginPasswordInput;
+export default EmailInput;

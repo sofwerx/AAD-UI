@@ -4,9 +4,9 @@ import { Button, Col, Icon, Row } from 'react-materialize';
 import { LOGIN, LOGIN_PAGE_UNLOADED } from '../../constants/actionTypes';
 import agent from '../../agent';
 import { connect } from 'react-redux';
-import LoginUsernameInput from './components/LoginUsernameInput';
-import LoginPasswordInput from './components/LoginPasswordInput';
 import ListErrors from '../Common/ListErrors';
+import UsernameInput from './components/UsernameInput';
+import PasswordInput from './components/PasswordInput';
 const PropTypes = require('prop-types');
 
 const mapDispatchToProps = dispatch => ({
@@ -21,16 +21,17 @@ const mapStateToProps = state => ({ ...state.auth });
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-        username: {
-          value: '',
-          hasValidValue: false
-        },
-        password: {
-          value: '',
-          hasValidValue: false
-        }
-    };
+    this.inputFields = ['username', 'password'];
+
+    let initialState = {};
+    this.inputFields.forEach((inputField) => {
+      initialState[inputField] = {
+        value: '',
+        hasValidValue: false
+      };
+    });
+
+    this.state = initialState;
     this.handleInputV2 = this.handleInputV2.bind(this);
 
     this.submitForm = () => ev => {
@@ -69,22 +70,16 @@ class LoginForm extends Component {
         <div className ="loginForm " >
           <Row className="login-signup-form ">
             <Col s={12} l={6} className={"offset-l3"}>
-              <LoginUsernameInput
-                label={'Username'}
-                name={'username'}
+              <UsernameInput
                 value={this.state.username.value}
                 onChange={this.handleInputV2}
-                onBlur={this.handleInputV2}
-                s={12}/>{' '}
+                onBlur={this.handleInputV2}/>{' '}
             </Col>
             <Col s={12} l={6} className={"offset-l3"}>
-              <LoginPasswordInput
-                label="Password"
-                name={'password'}
+              <PasswordInput
                 value={this.state.password.value}
                 onChange={this.handleInputV2}
-                onBlur={this.handleInputV2}
-                s={12}/>{' '}
+                onBlur={this.handleInputV2}/>{' '}
             </Col>
           </Row>
           <Row className='center'>
