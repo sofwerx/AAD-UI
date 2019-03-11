@@ -20,6 +20,7 @@ class LoggedInView extends React.Component {
             }}>
             <SideNavItem linkTo="/dashboard" label="Home"/>
             <SideNavItem linkTo="/portal" label="Portal"/>
+            <SideNavItem linkTo="/reviews" label="Submitted Feedback"/>
             <SideNavItem linkTo="/public" label="Public Reviews"/>
             <SideNavItem linkTo="/statistics" label="The Stats"/>
             <SideNavItem linkTo="/profile" label="Edit Profile"/>

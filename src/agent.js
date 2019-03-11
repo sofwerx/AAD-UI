@@ -48,6 +48,11 @@ const auth = {
     requests.put(`/users/${userId}`, { user: { ...updatedUser } })
 };
 
+const users = {
+  getSurveyResponses: (userId) =>
+    requests.get(`/users/${userId}/survey_responses`)
+};
+
 const tools = {
   index: () =>
     requests.get('/tools', { user: {} }),
@@ -62,8 +67,9 @@ const surveys = {
 
 export default {
   auth,
-  tools,
   surveys,
+  tools,
+  users,
   setToken: _token => {
     token = _token;
   }

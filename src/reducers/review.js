@@ -1,5 +1,5 @@
 import {
-  ASYNC_START,
+  ASYNC_START, MY_REVIEWS_LOADED, MY_REVIEWS_UNLOADED,
   OPEN_REVIEW_FORM,
   REVIEW_FORM_LOADED,
   REVIEW_FORM_UNLOADED
@@ -22,6 +22,12 @@ export default (state = {}, action) => {
           survey_name: action.payload.survey.survey_name
         }
       };
+    case MY_REVIEWS_LOADED:
+      return {
+        ...state,
+        surveyResponses: action.payload.surveyResponses
+      };
+    case MY_REVIEWS_UNLOADED:
     case REVIEW_FORM_UNLOADED:
       return {};
     case ASYNC_START:

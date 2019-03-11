@@ -22,6 +22,7 @@ import { push } from 'connected-react-router';
 
 import '../assets/css/app.css';
 import Redirect from 'react-router/es/Redirect';
+import SurveyResponsesPage from './Review/SurveyResponsesPage';
 
 const mapStateToProps = state => {
   return {
@@ -99,6 +100,7 @@ class App extends React.Component {
             <PrivateRoute currentUser={this.props.currentUser} path="/portal" component={PortalPage}/>
             <PrivateRoute currentUser={this.props.currentUser}  path="/profile" component={ProfilePage}/>
             <PrivateRoute currentUser={this.props.currentUser}  path="/review/:survey_id/:slug" component={ReviewPage}/>
+            <PrivateRoute currentUser={this.props.currentUser}  path="/reviews" component={SurveyResponsesPage}/>
             <PrivateRoute currentUser={this.props.currentUser}  path="/public" component={PublicReviewPage}/>
             <PrivateRoute currentUser={this.props.currentUser} path='/statistics' component={StatisticsPage}/>
             <Route component={NotFoundPage} />

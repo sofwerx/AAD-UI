@@ -1,0 +1,43 @@
+.surveyResponse-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.surveyResponse {
+  border: 1px solid black;
+  margin-bottom:5px;
+  color: black;
+}
+
+.surveyResponse_header {
+  border: 1px solid black;
+  margin-bottom:5px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+}
+
+.surveyResponseBody {
+  min-width:100%!important;
+  min-height:50px;
+  margin-bottom: 0px;
+}
+
+.surveyResponseField
+{
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.surveyResponseField_index {
+  text-align:left;
+  margin-left:0;
+}
+
+.surveyResponseField_delete {
+  text-align:right;
+  margin-right:0;
+}
+
