@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import { Row, Col, Input } from 'react-materialize';
 
-import '../../../assets/css/review.css';
-import '../../../assets/css/off.css';
-import '../../../assets/css/questionTypes.css';
+import '../../../../assets/css/review.css';
+import '../../../../assets/css/off.css';
+import '../../../../assets/css/questionTypes.css';
+
+const PropTypes = require('prop-types');
 
 const AnswerOptions = props => {
   const answerOptions = props.answerOptions;
   let options = answerOptions.map((answerOption, index) =>
-    <option value={index}>{answerOption.answer_option_value}</option>
+    <option key={index} value={answerOption.answer_option_value}>{answerOption.answer_option_value}</option>
   );
   return (
     <Input
+      type='select'
       className="LikertScaleQuestionInput"
-      defaultValue={0}
-      s={12}
-      type='select'>
+      onChange = {props.onChange}
+      s={12}>
       {options}
     </Input>
   );
@@ -30,11 +32,22 @@ class BackgroundSelect extends Component {
     this.parentOnChange = this.props.onChange;
     this.parentOnBlur = this.props.onBlur;
 
-    this.state = {};
+    const defaultValue = props.question.answerOptions[0].answer_option_value;
+    this.propagateState(this.props.question.id, defaultValue);
   }
 
+  propagateState = (id, value) => {
+    const inputState  = {
+      questionId: id,
+      answerType: 'answer_text',
+      value: value,
+      hasValidValue: true
+    };
+    if (this.parentOnChange) this.parentOnChange(inputState, null);
+  };
+
   onChange = (e) => {
-    if (this.parentOnChange) this.parentOnChange(e);
+    this.propagateState(this.props.question.id, e.target.value);
   };
 
   onBlur = (e) => {
@@ -56,15 +69,26 @@ class BackgroundSelect extends Component {
               <span className="questionText">{question.question_text}</span>
             </Col>
             <Col s={4} l={7}>
-              <AnswerOptions answerOptions={question.answerOptions}/>
+              <AnswerOptions answerOptions={question.answerOptions} onChange = {this.onChange}/>
             </Col>
           </Row>
         </Col>
       );
     }
     return null;
-  };
+  }
 }
+
+BackgroundSelect.propTypes = {
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  question: PropTypes.object
+};
+
+AnswerOptions.propTypes = {
+  answerOptions: PropTypes.array,
+  onChange: PropTypes.func
+};
 
 export default BackgroundSelect;
 

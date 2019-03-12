@@ -66,7 +66,7 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <form>
+      <form className="container-fluid" onSubmit={this.submitForm()}>
         <div className ="loginForm " >
           <Row className="login-signup-form ">
             <Col s={12} l={6} className={"offset-l3"}>
@@ -85,10 +85,9 @@ class LoginForm extends Component {
           <Row className='center'>
             <ListErrors errors={this.props.errors}/>
             <Button
-              onClick={this.submitForm()}
-              type="submit"
-              disabled={this.props.inProgress}
               large={true}
+              disabled={this.props.inProgress}
+              className={`login-signup-submit-button`}
               waves='light'>
               <Icon className="login-signup-button-icon">send</Icon>
             </Button>

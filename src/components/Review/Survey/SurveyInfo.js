@@ -1,7 +1,9 @@
 import React from 'react';
 import { Col } from 'react-materialize';
+const PropTypes = require('prop-types');
 
-const ReviewInfo = (props) => {
+
+const SurveyInfo = (props) => {
   if (props.survey) {
     return (
       <Col l={7} s={12}>
@@ -16,4 +18,8 @@ const ReviewInfo = (props) => {
   return null;
 };
 
-export default ReviewInfo;
+SurveyInfo.propTypes = {
+  survey: PropTypes.object
+};
+
+export default SurveyInfo;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Collapsible, CollapsibleItem, Input } from 'react-materialize';
 
-import '../../../assets/css/questionTypes.css';
+import '../../../../assets/css/questionTypes.css';
+const PropTypes = require('prop-types');
 
 class TextField extends Component {
   constructor(props) {
@@ -12,11 +13,21 @@ class TextField extends Component {
     this.parentOnChange = this.props.onChange;
     this.parentOnBlur = this.props.onBlur;
 
-    this.state = {};
+    this.propagateState(props.question.id, '');
   }
 
+  propagateState = (id, value) => {
+    const inputState  = {
+      questionId: id,
+      answerType: 'answer_text',
+      value: value,
+      hasValidValue: true
+    };
+    if (this.parentOnChange) this.parentOnChange(inputState, null);
+  };
+
   onChange = (e) => {
-    if (this.parentOnChange) this.parentOnChange(e);
+    this.propagateState(this.props.question.id, e.target.value);
   };
 
   onBlur = (e) => {
@@ -37,7 +48,8 @@ class TextField extends Component {
                       s={12}
                       className="text-align-center"
                       type='textarea'
-                      placeholder={question.question_subtext}/>
+                      placeholder={question.question_subtext}
+                      onChange = {this.onChange}/>
                   </Col>
                 </Row>
               </CollapsibleItem>
@@ -47,8 +59,14 @@ class TextField extends Component {
       );
     }
     return null;
-  };
+  }
 }
 
-export default TextField;
+TextField.propTypes = {
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  question: PropTypes.object
+};
 
+
+export default TextField;

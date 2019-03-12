@@ -6,7 +6,7 @@ import {
   LOGOUT,
   LOGIN,
   REGISTER,
-  OPEN_REVIEW_FORM
+  OPEN_REVIEW_FORM, SURVEY_RESPONSE_SUBMITTED
 } from '../constants/actionTypes';
 
 
@@ -45,6 +45,11 @@ export default (state = defaultState, action) => {
         redirectTo: action.error ? null : '/portal',
         token: action.error ? null : action.payload.token,
         currentUser: action.error ? null : action.payload.user
+      };
+    case SURVEY_RESPONSE_SUBMITTED:
+      return {
+        ...state,
+        redirectTo: action.error ? null : '/portal'
       };
     case OPEN_REVIEW_FORM:
       const surveyName = action.payload.surveys[0].survey_name;

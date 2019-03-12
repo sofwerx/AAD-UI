@@ -65,9 +65,15 @@ const surveys = {
     requests.get(`/surveys/${surveyId}`)
 };
 
+const surveyResponses = {
+  post: (newSurveyResponse) =>
+    requests.post('/survey_responses',{ surveyResponse: { ...newSurveyResponse } })
+};
+
 export default {
   auth,
   surveys,
+  surveyResponses,
   tools,
   users,
   setToken: _token => {

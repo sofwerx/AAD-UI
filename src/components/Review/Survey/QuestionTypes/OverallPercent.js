@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-materialize';
+import '../../../../assets/css/questionTypes.css';
 
-import '../../../assets/css/questionTypes.css';
+const PropTypes = require('prop-types');
+
 
 class OverallPercent extends Component {
   constructor(props) {
@@ -11,11 +13,11 @@ class OverallPercent extends Component {
     this.updateRangeValue = this.updateRangeValue.bind(this);
 
     this.parentOnChange = this.props.onChange;
-    this.parentOnBlur = this.props.onBlur;
 
     this.state = {
       rangeValue: 50
     };
+    this.propagateState(props.question.id, this.state.rangeValue);
   }
 
   onChange = (e) => {
@@ -23,11 +25,21 @@ class OverallPercent extends Component {
   };
 
   onBlur = (e) => {
-    if (this.parentOnBlur) this.parentOnBlur(e);
+    this.propagateState(this.props.question.id, this.state.rangeValue);
+  };
+
+  propagateState = (id, value) => {
+    const inputState = {
+      questionId: id,
+      answerType: 'answer_numeric',
+      value: value,
+      hasValidValue: true
+    };
+    if (this.parentOnChange) this.parentOnChange(inputState, null);
   };
 
   updateRangeValue = (e) => {
-    this.setState({ rangeValue: e.target.value });
+    this.setState({ rangeValue: Number.parseInt(e.target.value) });
   };
 
   render() {
@@ -43,8 +55,8 @@ class OverallPercent extends Component {
                 <input
                   type="range"
                   value={this.state.rangeValue}
-                  defaultValue={50}
                   onChange={this.updateRangeValue}
+                  onBlur = {this.onBlur}
                   min="0" max="100"/>
               </p>
             </Col>
@@ -53,8 +65,15 @@ class OverallPercent extends Component {
       );
     }
     return null;
-  };
+  }
 }
+
+OverallPercent.propTypes = {
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  question: PropTypes.object
+};
+
 
 export default OverallPercent;
 
