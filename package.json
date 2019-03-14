@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "cross-env": "^5.1.4",
-    "eslint": "^5.12.0",
+    "eslint": "5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-react": "^7.12.4",

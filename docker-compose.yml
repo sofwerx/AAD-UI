@@ -1,24 +1,20 @@
-version: '2.1'
-
-x-logging:
-  &default-logging
-  options:
-    max-size: '12m'
-    max-file: '5'
-  driver: json-file
+version: '3.5'
 
 services:
 
   aad-ui:
-    build: .
-    image: sofwerx/aad-ui
     container_name: aad-ui
     hostname: aad-ui
     restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/usr/src/app'
+      - '/usr/src/app/node_modules'
     ports:
-      - 3001:3001
+      - ${UI_PORT:-3001}:4100
     environment:
+      - NODE_ENV=development
     networks:
       - default
-    logging: *default-logging
-

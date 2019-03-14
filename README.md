@@ -25,15 +25,28 @@ Create a `.env` file at directory root to override defaults.
 NODE_ENV:           [development]
 PUBLIC_URL:         [http://localhost:3001]
 REACT_APP_API_URL:  [http://localhost:3000]
+
+#DOCKER-ENV-VARIABLES
+UI_PORT:            [3001]
+
 ````
 
 ### Installing
 1. Clone this repo.  [[AAD-UI GITHUB]](https://github.com/sofwerx/AAD-UI).
-3. `npm install` to install all required dependencies.
-6. `npm run start` Starts an instance.
+2. Update `REACT_APP_API_URL` with API_URL if not default.
+2. `npm install` to install all required dependencies.
+3. `npm run start` Starts an instance.
+
+## Docker Setup
+To test docker functionality. You will need to install [Docker](https://docs.docker.com/compose/install/) locally.
+* `docker-compose build` - Builds aad-ui.
+* `docker-compose up` - Creates and attaches container instances.
+* `docker-compose down` - Stop Container instances.
+* docker-compose port forwards from `3001 -> 4100`. Change `UI_PORT` to override exposed port.
+
 
 Should be able to hit a sample endpoint.
-`localhost:3000/`
+`localhost:3001/`
 
 ## Application Structure
 - `components/App.js` - The entry point to our application. This file defines our react server. Holds routing structure.
