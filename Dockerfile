@@ -1,17 +1,19 @@
 # base image
 FROM node:9.6.1
 
-# set working directory
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+#COPY set working directory
+RUN mkdir -p /app
+WORKDIR /app
 
 # add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
-COPY package.json /usr/src/app/package.json
+COPY package.json ./
 RUN npm install
 RUN npm install react-scripts@2.1.5 -g
+COPY . ./
 
 # start app
-CMD ["npm", "start"]
+ADD run.sh /
+CMD /run.sh
