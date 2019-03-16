@@ -8,11 +8,10 @@ import {
 } from '../../constants/actionTypes';
 import agent from '../../agent';
 import SubHeader from '../Common/SubHeader';
-import SurveyResponse from './SurveyResponse/SurveyResponse';
-import SurveyResponseHeader from './SurveyResponse/SurveyResponseHeader';
+import SurveyResponseListing from './SurveyResponse/SurveyResponseListing';
+import SurveyResponseTableHeader from './SurveyResponse/SurveyResponseTableHeader';
+
 const PropTypes = require('prop-types');
-
-
 
 const mapStateToProps = state => ({
   ...state.review,
@@ -45,12 +44,14 @@ class SurveyResponsesPage extends Component {
       );
     }
     else {
-      return props.surveyResponses.map((surveyResponse, index) => {
-        return (
-          <SurveyResponse key={index} index={index} surveyResponse={surveyResponse}/>
-
-        );
-      });
+      return (
+        <div>
+          {props.surveyResponses.map((surveyResponse, index) => {
+            return (
+              <SurveyResponseListing key={index} index={index} surveyResponse={surveyResponse}/>);
+          })
+          }
+        </div>);
     }
   };
 
@@ -62,7 +63,7 @@ class SurveyResponsesPage extends Component {
                      subHeader="Submitted Feedback"/>
           <Section className="reviews-wrapper center">
             <Row className="surveyResponses-wrapper">
-              <SurveyResponseHeader/>
+              <SurveyResponseTableHeader/>
               {
                 this.loadSurveyResponses(this.props)
               }

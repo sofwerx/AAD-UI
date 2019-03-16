@@ -41,3 +41,24 @@
   margin-right:0;
 }
 
+.surveyResponseListing {
+  border: 2px solid black;
+  margin-bottom:5px;
+  color: black;
+}
+
+.surveyResponseListing-hd {
+  min-width:100%!important;
+  min-height:50px;
+  margin-bottom: 0;
+}
+
+.surveyResponseListing-bd {
+  padding-top:15px;
+  border-top: 1px solid black;
+  margin: 0 5px 5px;
+}
+
+.surveyResponseDetails-row {
+  margin-bottom:0!important;
+}
