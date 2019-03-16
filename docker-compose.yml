@@ -1,4 +1,4 @@
-version: '3.5'
+version: '2.1'
 
 services:
 
@@ -9,11 +9,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - '.:/usr/src/app'
-      - '/usr/src/app/node_modules'
     ports:
-      - ${UI_PORT:-3001}:4100
+      - ${UI_PORT:-3002}:4100
     environment:
       - NODE_ENV=development
     networks:
