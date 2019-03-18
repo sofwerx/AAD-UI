@@ -6,7 +6,7 @@ import {
   LOGOUT,
   LOGIN,
   REGISTER,
-  OPEN_REVIEW_FORM, SURVEY_RESPONSE_SUBMITTED
+  OPEN_REVIEW_FORM, SURVEY_RESPONSE_SUBMITTED, OPEN_TOOL_REPORT
 } from '../constants/actionTypes';
 
 
@@ -58,6 +58,12 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         redirectTo: action.error ? null : reviewRedirect
+      };
+    case OPEN_TOOL_REPORT:
+      const tool = action.tool;
+      return {
+        ...state,
+        redirectTo: `/reporting/${tool.id}/${slugify(tool.tool_name)}`
       };
     default:
       return state;

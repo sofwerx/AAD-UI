@@ -9,6 +9,10 @@ import {
 import '../../assets/css/portal.css';
 import ToolDatasources from './ToolDatasources';
 import ToolInfo from './ToolInfo';
+import {
+  OPEN_TOOL_REPORT
+} from '../../constants/actionTypes';
+import { connect } from 'react-redux';
 
 const FeedbackButton = (props) => {
   if (props.activeSurveys > 0) {
@@ -21,14 +25,40 @@ const FeedbackButton = (props) => {
   return null;
 };
 
+const ViewReportButton = (props) => {
+  if (props.activeSurveys > 0 ) {
+    return (
+      <Button onClick={props.onClick} className="portal-buttons" waves='light'>
+        View Report
+        <Icon right tiny className="data">group</Icon>
+      </Button>);
+  }
+  return null;
+};
+
+const mapStateToProps = state => ({
+  ...state.portal
+});
+const mapDispatchToProps = dispatch => ({
+  triggerToolReport: (tool) => {
+    dispatch({
+      type: OPEN_TOOL_REPORT,
+      tool: tool
+    });
+  }
+});
+
 class Tool extends Component {
   constructor(props) {
     super(props);
-    this.asd = this.asd.bind(this);
+    this.onClickFeedback = this.onClickFeedback.bind(this);
   }
 
-  asd = () => {
+  onClickFeedback = () => {
     this.props.handler(this.props.tool);
+  };
+  onClickViewReport = () => {
+    this.props.triggerToolReport(this.props.tool);
   };
 
   render() {
@@ -43,7 +73,6 @@ class Tool extends Component {
           <Col className="tool-description" s={6}>
             {tool.description}
           </Col>
-
           <Col s={4} className="center">
             <Row>
               <ToolInfo tool={tool}/>
@@ -52,13 +81,16 @@ class Tool extends Component {
               <ToolDatasources tool={tool}/>
             </Row>
             <Row>
-              <FeedbackButton activeSurveys={tool.activeSurveys} onClick={this.asd}/>
+              <FeedbackButton activeSurveys={tool.activeSurveys} onClick={this.onClickFeedback}/>
+            </Row>
+            <Row>
+              <ViewReportButton activeSurveys={tool.activeSurveys} onClick={this.onClickViewReport}/>
             </Row>
           </Col>
         </Row>
       </Section>
     );
-  };
+  }
 }
 
-export default Tool;
+export default connect(mapStateToProps, mapDispatchToProps)(Tool);

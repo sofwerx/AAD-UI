@@ -49,9 +49,9 @@ class PortalPage extends Component {
       );
     }
     else {
-      return props.tools.map(tool => {
+      return props.tools.map((tool, index) => {
         return (
-          <Tool handler={this.props.triggerNewReviewForm} tool={tool}/>
+          <Tool key={index} handler={this.props.triggerNewReviewForm} tool={tool}/>
         );
       });
     }

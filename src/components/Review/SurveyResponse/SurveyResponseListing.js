@@ -21,8 +21,8 @@ class SurveyResponseListing extends Component {
     const surveyResponse = this.props.surveyResponse;
     if (surveyResponse) {
       return (
-        <Row>
-          <Col s={12} className="surveyResponseListing">
+        <Row className ={"surveyResponseListing"}>
+          <Col s={12}>
             <Row
               className="surveyResponseListing-hd valign-wrapper min-width-100 edit-results-item">
               <SurveyResponseHeader

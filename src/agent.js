@@ -57,7 +57,9 @@ const tools = {
   index: () =>
     requests.get('/tools', { user: {} }),
   activeSurvey: (toolId) =>
-    requests.get(`/tools/${toolId}/surveys?isActive=true`)
+    requests.get(`/tools/${toolId}/surveys?isActive=true`),
+  getSurveyResponses: (toolId) =>
+    requests.get(`/tools/${toolId}/survey_responses`)
 };
 
 const surveys = {
