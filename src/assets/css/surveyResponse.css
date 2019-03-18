@@ -58,7 +58,30 @@
   border-top: 1px solid black;
   margin: 0 5px 5px;
 }
+.surveyResponseListing-bd.collapsed {
+  display:none;
+}
+
 
 .surveyResponseDetails-row {
   margin-bottom:0!important;
+}
+
+.surveyResponseField_collapse:hover {
+  transform: scale(1.20);
+}
+
+.surveyResponseField_collapse:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  /*position: absolute;*/
+  right: 10px;
+  /*top: 7px;*/
+  top:25%;
+  font-size: 2em;
+}
+
+.surveyResponseField_collapse.collapsed:after {
+  content: '\2212';
 }
